@@ -34,9 +34,9 @@ use std::collections::BTreeSet;
 use std::io::IsTerminal;
 
 use chrono::{DateTime, Local, SecondsFormat};
-use dots_rs_core::Timepoint;
-use dots_rs_model::DotsDescriptorRequest;
-use dots_rs_transport::{App, ColorSchema, Operation, StructDisplay};
+use dots_rs::Timepoint;
+use dots_rs::DotsDescriptorRequest;
+use dots_rs::{App, ColorSchema, Operation, StructDisplay};
 
 const CLIENT_NAME: &str = "dots-trace";
 
@@ -56,7 +56,7 @@ fn format_timepoint(tp: Timepoint) -> String {
 
 #[tokio::main(flavor = "current_thread")]
 async fn main() -> Result<(), Box<dyn std::error::Error>> {
-    dots_rs_transport::init_tracing("");
+    dots_rs::init_tracing("");
 
     let app = App::new(CLIENT_NAME).await?;
 

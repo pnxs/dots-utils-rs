@@ -34,8 +34,8 @@ use ratatui::text::{Line, Span};
 use ratatui::widgets::{Block, Borders, Cell, Paragraph, Row, Table};
 use tokio::time::{MissedTickBehavior, interval};
 
-use dots_rs_model::{DotsClient, DotsClientStatistics, DotsConnectionState};
-use dots_rs_transport::{App, Container};
+use dots_rs::{DotsClient, DotsClientStatistics, DotsConnectionState};
+use dots_rs::{App, Container};
 
 const CLIENT_NAME: &str = "dots-tui";
 const TICK: Duration = Duration::from_millis(100);

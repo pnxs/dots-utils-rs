@@ -32,7 +32,7 @@ use core::mem::{offset_of, size_of};
 use std::collections::{HashMap, HashSet};
 use std::fmt::Write as _;
 
-use dots_rs_core::{EnumDescriptor, EnumElement, PropertyDescriptor, StructDescriptor, StructFlags};
+use dots_rs::{EnumDescriptor, EnumElement, PropertyDescriptor, StructDescriptor, StructFlags};
 use object::{
     Architecture, BinaryFormat, Object, ObjectSection, ObjectSegment, RelocationFlags,
 };
