@@ -1,0 +1,30 @@
+[workspace]
+members = ["dots-inspect", "dots-tui", "dots-trace"]
+resolver = "3"
+
+[workspace.package]
+version = "0.1.0"
+edition = "2024"
+authors = ["Thomas Schätzlein <thomas@pnxs.de>"]
+license = "LGPL-2.1-only"
+
+[workspace.dependencies]
+dots-rs = "0.1.5"
+
+#tracing = { version = "0.1", default-features = false, features = ["std", "attributes"] }
+#tracing-subscriber = { version = "0.3", default-features = false, features = ["env-filter", "fmt", "ansi"] }
+
+#linkme = "0.3"
+
+# ELF reading for dots-inspect (static binary inspection).
+object = { version = "0.40", default-features = false, features = ["read_core", "elf", "std"] }
+tokio = { version = "1", default-features = false }
+
+[workspace.lints.rust]
+unsafe_code = "deny"
+
+[profile.release]
+opt-level = 3
+lto = true
+codegen-units = 1
+

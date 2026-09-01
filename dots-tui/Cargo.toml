@@ -1,0 +1,19 @@
+[package]
+name = "dots-tui"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+authors.workspace = true
+publish = false
+description = "Terminal UI showing connected DOTS clients and per-client statistics."
+
+[dependencies]
+dots-rs.workspace = true
+
+tokio = { workspace = true, features = ["macros", "net", "rt", "signal", "time"] }
+futures-util = { version = "0.3", default-features = false, features = ["std"] }
+ratatui = "0.29"
+crossterm = { version = "0.28", features = ["event-stream"] }
+
+[lints]
+workspace = true

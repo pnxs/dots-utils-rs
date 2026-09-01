@@ -1,0 +1,18 @@
+[package]
+name = "dots-inspect"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+authors.workspace = true
+publish = false
+description = "Statically inspect a compiled dots-rs ELF binary: which DOTS types it publishes and subscribes to."
+
+[dependencies]
+dots-rs.workspace = true
+object.workspace = true
+
+[dev-dependencies]
+dots-rs.workspace = true
+
+[lints]
+workspace = true

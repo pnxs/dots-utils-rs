@@ -1,0 +1,17 @@
+[package]
+name = "dots-trace"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+authors.workspace = true
+publish = false
+description = "DOTS trace tool — connects to a broker and prints every transmission as it arrives."
+
+[dependencies]
+dots-rs.workspace = true
+chrono = "0.4"
+
+tokio = { workspace = true, features = ["macros", "net", "rt", "signal", "time"] }
+
+[lints]
+workspace = true
