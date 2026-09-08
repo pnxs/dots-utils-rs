@@ -9,7 +9,7 @@ authors = ["Thomas Schätzlein <thomas@pnxs.de>"]
 license = "LGPL-2.1-only"
 
 [workspace.dependencies]
-dots-rs = "0.1.5"
+dots-rs = "0.1.6"
 
 #tracing = { version = "0.1", default-features = false, features = ["std", "attributes"] }
 #tracing-subscriber = { version = "0.3", default-features = false, features = ["env-filter", "fmt", "ansi"] }

@@ -87,6 +87,10 @@ pub enum KindInfo {
     Struct(String),
     /// DOTS enum, by type name.
     Enum(String),
+    /// Typed instance reference (`instance_ref<Target>`), by target
+    /// type name. The generic `instance_ref` is payload-less and
+    /// surfaces as `Scalar("instance_ref")`.
+    InstanceRefTo(String),
 }
 
 impl std::fmt::Display for KindInfo {
@@ -96,6 +100,7 @@ impl std::fmt::Display for KindInfo {
             Self::Scalar(name) => f.write_str(name),
             Self::Vec(inner) => write!(f, "vector<{inner}>"),
             Self::Struct(name) | Self::Enum(name) => f.write_str(name),
+            Self::InstanceRefTo(name) => write!(f, "instance_ref<{name}>"),
         }
     }
 }
@@ -203,6 +208,7 @@ const KIND_PAYLOAD: u64 = 8;
 const KIND_VEC: u8 = 16;
 const KIND_STRUCT: u8 = 17;
 const KIND_ENUM: u8 = 18;
+const KIND_INSTANCE_REF_TO: u8 = 21;
 
 /// `.dots` IDL spelling of a payload-free `FieldKind` discriminant
 /// (the names dots-rs-build's parser accepts).
@@ -225,6 +231,10 @@ fn scalar_idl_name(discriminant: u8) -> Option<&'static str> {
         14 => "string",
         15 => "uuid",
         19 => "any",
+        // Generic instance reference — payload-less, like `any`. The
+        // typed form (discriminant 21) carries its target name and is
+        // handled in `parse_kind`.
+        20 => "instance_ref",
         _ => return None,
     })
 }
@@ -566,6 +576,13 @@ impl Parser<'_, '_> {
                 }
                 Ok(KindInfo::Enum(name))
             }
+            // The payload is the target's name (`&'static str` fat
+            // pointer inline in the enum), not a descriptor pointer —
+            // read it directly at the payload offset.
+            KIND_INSTANCE_REF_TO => Ok(KindInfo::InstanceRefTo(
+                self.image
+                    .str(addr + KIND_PAYLOAD, "instance_ref target name")?,
+            )),
             other => Err(InspectError::Malformed(format!(
                 "field kind at {addr:#x}: unknown discriminant {other} — binary \
                  built against a newer dots-rs than this dots-inspect?"

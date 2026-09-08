@@ -232,9 +232,9 @@ dependencies = [
 
 [[package]]
 name = "dots-rs"
-version = "0.1.5"
+version = "0.1.6"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "7bc295ae8e32b4ef5cb58824c72392420ec9138d53a6bd507534052344192a73"
+checksum = "6f33ec504fae8860b8a385dea5e0be05db515e4d9f547bdc3765eab3baca6e8b"
 dependencies = [
  "dots-rs-core",
  "dots-rs-derive",
@@ -245,9 +245,9 @@ dependencies = [
 
 [[package]]
 name = "dots-rs-core"
-version = "0.1.5"
+version = "0.1.6"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "9d560de86bc3393fa900b8c3b69025881c4d743873e3b27e01b12b023b3334f4"
+checksum = "cca83c0a0fe33492ad56b2aabad54f60d1110ae74d4ffb1a74d304ff7a7de60a"
 dependencies = [
  "dots-rs-derive",
  "linkme",
@@ -256,9 +256,9 @@ dependencies = [
 
 [[package]]
 name = "dots-rs-derive"
-version = "0.1.5"
+version = "0.1.6"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "d57a5be44d64e81fc77a3b469be5549a482cbd9e7508320be78e1b7029a4594e"
+checksum = "3b299bec9c5d038ad327e9035f6b5db81fba5f607fe1e74786d22a8f58169efc"
 dependencies = [
  "proc-macro2",
  "quote",
@@ -267,9 +267,9 @@ dependencies = [
 
 [[package]]
 name = "dots-rs-model"
-version = "0.1.5"
+version = "0.1.6"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "d3ef5a0ee35f86b3cc07491c6b53226881078ac61dfab63c1053969511e0504a"
+checksum = "bb659285de8d9f4a8e4b68f7f9e521fe039a47bf90793b09d7a089514dc13bd7"
 dependencies = [
  "bytes",
  "dots-rs-core",
@@ -279,9 +279,9 @@ dependencies = [
 
 [[package]]
 name = "dots-rs-testing"
-version = "0.1.5"
+version = "0.1.6"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "1df8434eb4355ad85210e20e44f5af7b8cbe22555da45015c6bb16449a328bd8"
+checksum = "668d345a69f13f0decece50bf8d88836a482faf51da05a49a590e020af5e0d51"
 dependencies = [
  "dots-rs-core",
  "dots-rs-model",
@@ -292,9 +292,9 @@ dependencies = [
 
 [[package]]
 name = "dots-rs-transport"
-version = "0.1.5"
+version = "0.1.6"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "4f986189b2e125ee5be75321c4cee9405b3262b14b6975172dc10a367bd0c08d"
+checksum = "e253e2a399352ac6fa93cbdb2ecf6f7e657b1b45864f3d53d35939856205f4d7"
 dependencies = [
  "bytes",
  "dots-rs-core",
