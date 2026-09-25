@@ -517,22 +517,25 @@ fn snapshot_rows(
     stats: &Container<DotsClientStatistics>,
     rates: &mut RateTracker,
 ) -> Vec<RowData> {
-    let mut clients_snap: Vec<DotsClient> = Vec::new();
-    clients.for_each(|_, c, _| clients_snap.push(c.clone()));
-    let mut stats_snap: HashMap<u32, DotsClientStatistics> = HashMap::new();
-    stats.for_each(|_, s, _| {
-        if let Some(id) = s.client_id {
-            stats_snap.insert(id, s.clone());
-        }
+    // Copy only the displayed client fields, releasing the client
+    // container's read lock before looking up statistics.
+    let clients_snap: Vec<_> = clients.with_iter(|iter| {
+        iter.filter_map(|(_, c, _)| Some((c.id?, c.name.clone(), c.connection_state)))
+            .collect()
     });
 
     let mut alive: HashSet<u32> = HashSet::with_capacity(clients_snap.len());
     let mut rows: Vec<RowData> = clients_snap
         .into_iter()
-        .filter_map(|c| {
-            let id = c.id?;
+        .map(|(id, name, state)| {
             alive.insert(id);
-            let stat = stats_snap.get(&id);
+            // Borrow just this client's statistics by their complete key.
+            // The guard is dropped at the end of this row, before UI I/O.
+            let stat = stats.get_ref(&DotsClientStatistics {
+                client_id: Some(id),
+                ..Default::default()
+            });
+            let stat = stat.as_deref();
             // `DotsClientStatistics` is broker-centric: its `sent`
             // counts broker→guest traffic, `received` counts
             // guest→broker. The TUI presents the *guest* view, so we
@@ -546,10 +549,10 @@ fn snapshot_rows(
                 .and_then(|s| s.sent.as_ref().and_then(|d| d.packages))
                 .unwrap_or(0);
             let (sent_pps, recv_pps) = rates.observe(id, sent_pkts, recv_pkts);
-            Some(RowData {
+            RowData {
                 id,
-                name: c.name,
-                state: c.connection_state,
+                name,
+                state,
                 sent_bytes: stat
                     .and_then(|s| s.received.as_ref().and_then(|d| d.bytes))
                     .unwrap_or(0),
@@ -567,7 +570,7 @@ fn snapshot_rows(
                 overflow: stat
                     .and_then(|s| s.overflow_disconnected)
                     .unwrap_or(false),
-            })
+            }
         })
         .collect();
     rates.forget(&alive);
